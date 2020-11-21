@@ -24,15 +24,9 @@ router.post('/', (req, res)=>{
 					res.redirect('/user');
 			 	}
 			 }	);
-			 //Session["UserID"] = obj1.uid.ToString();
-			// Session["UserPassword"] = obj1.upassword.ToString();
-
         } else {
-		   // res.render('home/not_register');
-		   res.send('error');
+		   res.send('Login Failed');
         }
-
-			})
-		
+			})	
 	});
 module.exports = router;

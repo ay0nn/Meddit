@@ -30,8 +30,7 @@ nav li a:hover{
 }
 .center-login{
 	position: absolute;
-	background-color: rgb(78, 78, 78);
-	opacity: 0.9;
+	border-style: 10px outset;
 	left: 50%;
 	top: 50%;
 	-webkit-transform: translate(-50%, -50%);

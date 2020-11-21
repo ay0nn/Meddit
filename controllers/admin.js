@@ -97,35 +97,44 @@ router.post('/adduser', [
 });
 
 ////Update
-router.get('/updateuser/:user_id',(req, res)=>{
-	var user ={
-		name:req.params.name
-	};
-	res.render('admin/updateuser',user);
-});
-router.post('/updateuser/:user_id',(req,res)=>{
-	var user={
-		user_id:req.params.user_id,
-		name:req.body.name
-	}
-	
-	userModel.update(user,function(status){
-		if(status){
-			console.log('Done');
-			res.redirect('/admin/userlist');
-		}
-		else{
-			res.render('/admin/updateuser')
-		}
+router.get('/updateuser/:user_id', (req, res)=>{
+
+	userModel.getById(req.params.user_id, (result) => {
+		var user = {
+			name: result[0].name,
+			phone_number:result[0].phone_number,
+			address: result[0].address,
+			blood_group:result[0].blood_group,
+			user_type:result[0].user_type,
+			email:result[0].email
+		};
+		res.render('admin/updateuser', user);
 	});
 });
 
+router.post('/updateuser/:user_id', (req, res)=>{
+	var user = {
+		user_id: req.params.user_id,
+		name: req.body.name,
+		phone_number:req.body.phone_number,
+		address: req.body.address,
+		blood_group:req.body.blood_group,
+		user_type:req.body.user_type,
+		email:req.body.email
+	}
+	userModel.update(user, (result) => {
+		console.log(result);
+	});
+	res.redirect('/admin/userlist');
+	res.end(JSON.stringify(user));  
+});
 
 ////Deletion
 router.get('/delete/:user_id', (req, res)=>{
 	userModel.delete(req.params.user_id,(status)=>{
 		if(status){
 			res.redirect('/admin/userlist');
+			
 		}else{
 			res.send('Deletion failed');
 		}

@@ -17,16 +17,7 @@ module.exports= {
             callback(result);
         });
     },
-    getById : function(id, callback){
-		var sql = "select * from user where user_id='"+id+"'";
-		db.getResults(sql, [id], function(results){
-			if(results.length > 0){
-				callback(results[0]);
-			}else{
-				callback(null);
-			}
-		});
-	},
+   
 	getByEmail: function(email, callback){
 		var sql = "SELECT * FROM `user` WHERE email='"+email+"'";
 		db.getResults(sql, function(results){
@@ -39,8 +30,8 @@ module.exports= {
 			callback(results);
 		});
 	},
-	getById: function(id, callback){
-		var sql = "select * from user where user_id='"+id+"'";
+	getById: function(user_id, callback){
+		var sql = "select * from user where user_id='"+user_id+"'";
 		db.getResults(sql, function(results){
 			callback(results);
 		});
@@ -57,14 +48,9 @@ module.exports= {
     },
 	update: function(user, callback){
 		console.log(user);
-		var sql ="UPDATE `user` SET `name` = '"+user.name+"' WHERE user_id = '"+user.user_id+"'";
-		db.execute(sql, function(status){
-			if(status){
-				callback(true);
-			}else{
-				console.log('welcome2');
-				callback(false);
-			}
+		var sql ="UPDATE `user` SET `name` = '"+user.name+"',`phone_number` = '"+user.phone_number+"',`address` = '"+user.address+"',`blood_group` = '"+user.blood_group+"',`user_type` = '"+user.user_type+"',`email` = '"+user.email+"' WHERE user_id = '"+user.user_id+"'";
+		db.execute(sql, (result) => {
+			callback(result);
 		});
 	},
 
