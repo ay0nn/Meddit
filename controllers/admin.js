@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 		res.redirect('/login');
 	}
 }); 
-//****************  ADDING MANAGER *************/
+////Add USer
 router.get('/adduser', (req, res) => {
 	if (req.session.email != null) {
 		userModel.getByEmail(req.session.email, function (result) {
@@ -28,7 +28,7 @@ router.get('/adduser', (req, res) => {
 	}
 }); 
 router.post('/adduser', [
-    //
+
     body('name')
     .notEmpty()
     .withMessage('Username is required'),
@@ -140,5 +140,48 @@ router.get('/delete/:user_id', (req, res)=>{
 		}
   });
 });
+
+router.get('/addnotice', (req, res) => {
+	if (req.session.email != null) {
+		userModel.getByEmail(req.session.email, function (result) {
+			res.render('admin/index', {
+				user: result
+			});
+		})
+	} else {
+		res.redirect('/login');
+	}
+}); 
+router.post('/addnotice', [
+    body('text')
+    .notEmpty()
+    .withMessage('Text is required for notice')
+  ], (req, res) => {
+        notice={
+            text: req.body.text
+			
+        };
+
+        userModel.insertnotice(notice,(status)=>{
+            if(status){
+				console.log('Notice Posted Succesfully');
+				res.redirect('/admin/index');                              
+            }else{
+                res.send("Notice Posting Failed!");                
+            } 
+        });
+	});
+	
+	router.get('/noticelist', (req, res) => {
+		if (req.session.email != null) {
+			userModel.getAllNotice(function (result) {
+				res.render('admin/noticelist', {
+					notices: result
+				});
+			})
+		} else {
+			res.redirect('/login');
+		}
+	});
 		
 module.exports = router;

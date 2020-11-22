@@ -11,13 +11,7 @@ module.exports= {
 			}
 		});
 	},
-	getUser: (user, callback) => {
-        var sql = `SELECT * FROM user WHERE email = ? AND password = ?`;
-        db.getResults(sql, [user.email, user.password], (result) => {
-            callback(result);
-        });
-    },
-   
+	
 	getByEmail: function(email, callback){
 		var sql = "SELECT * FROM `user` WHERE email='"+email+"'";
 		db.getResults(sql, function(results){
@@ -59,5 +53,21 @@ module.exports= {
 		db.execute(sql, function(status){
 			callback(status);
 		});
-	}
+	},
+	insertnotice:(notice,callback)=>{
+        var sql="INSERT INTO `notice`(`text`) VALUES ('"+notice.text+"')";
+        db.execute(sql,(status)=>{
+			if(status){
+				callback(true);
+			}else{
+				callback(false);
+			}
+		});
+    },
+	getAllNotice: function(callback){
+		var sql = "select * from notice";
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
 }
