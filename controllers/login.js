@@ -23,9 +23,12 @@ router.post('/', (req, res)=>{
 			 	req.session.user_type = result[0].user_type;
 				if(result[0].user_type =="admin"){
 			 		res.redirect('/admin');
+				 }
+				 else if(result[0].user_type=="doctor"){
+					res.redirect('/doctor');
 			 	}
-			 	else if(result[0].user_type=="user"){
-					res.redirect('/user');
+			 	else if(result[0].user_type=="patient"){
+					res.redirect('/patient');
 			 	}
 			 }	);
         } else {
