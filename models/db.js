@@ -10,7 +10,9 @@ var getConnection = function(callback){
 	 
 	connection.connect(function(err) {
 	  if (err) {
-	    console.error('Error in connecting: ' + err.stack);
+		
+		console.error('Error in connecting: ' + err.stack);
+		
 	    return;
 	  }
 	  console.log('Connected as id ' + connection.threadId);

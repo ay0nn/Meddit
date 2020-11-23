@@ -14,14 +14,14 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="/abc/css/style.css" rel="stylesheet" />
+        <link href="/color/css/mystyle.css" rel="stylesheet" />
         
     </head>
     <body id="page-top">
         <nav>
-            <a class="navbar-brand js-scroll-trigger" href="/" >Meddit</a>
+            <h2>Meddit</h2>
             <ul>
-                <li class="nav-item mx-0 mx-lg-1"><a href="#" class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"><i class="fa fa-user mr-1 pr-1" aria-hidden="true"></i>Welcome, <? =user.name?></a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a href="/login" class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">Home</a></li>
                         <li><a href="/admin/adduser">Add Users</a></li>
                         <li class="nav-item mx-0 mx-lg-1"><a href="/logout" class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger"><i class="fas fa-sign-out-alt mr-1 pr-1"></i>Logout</a></li>
                    
@@ -32,7 +32,7 @@
             <div class="container">
                 <!-- ---------------Body start---------------- -->
                <div id="table">
-                <table border="2" width="100%" align="center" >
+                <table border="2"  width="100%" align="center">
                     <thead>
                         <tr>
                             <th>User ID</th>
@@ -45,8 +45,8 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <% users.forEach( function(user) { %>
+                    <tbody align="center" >
+                        <% users.forEach(function(user) { %>
                             <tr>
                                 <td><%= user.user_id %></td>
                                 <td><%= user.name %></td>
@@ -55,10 +55,10 @@
                                 <td><%= user.blood_group %></td>
                                 <td><%= user.user_type%></td>
                                 <td><%= user.email %></td>
-                                <td>
 
+                                <td>
                                     <a href="/admin/updateuser/<%= user.user_id %>" class="btn btn-block btn-danger">Update</a>
-                                    <a href="/admin/delete/<%= user.user_id %>" class="btn btn-block btn-danger">Remove</a>
+                                 <a href="/admin/delete/<%= user.user_id %>" class="btn btn-block btn-danger">Remove</a>
                                    
                                 </td>
                             </tr>

@@ -1,5 +1,5 @@
-const e = require('express');
 const express 	= require('express');
+const crypto	= require('crypto');
 const router 	= express.Router();
 const {body, validationResult} 		= require('express-validator');
 const userModel		= require.main.require('./models/userModel');
@@ -16,6 +16,10 @@ router.get('/', (req, res) => {
 	}
 }); 
 ////Add USer
+router.get('/register', (req, res) => {
+			res.render('admin/register');
+		});
+	
 router.get('/adduser', (req, res) => {
 	if (req.session.email != null) {
 		userModel.getByEmail(req.session.email, function (result) {
@@ -55,7 +59,7 @@ router.post('/adduser', [
 
 	body('password')
     .notEmpty()
-    .withMessage('upassword is required')
+    .withMessage('Password is required')
 
   ], (req, res) => {
 
@@ -69,11 +73,13 @@ router.post('/adduser', [
 			address: req.body.address,
 			blood_group: req.body.blood_group,
 			user_type: req.body.user_type,
-            email: req.body.email,
-	        password: req.body.password
+			email: req.body.email,
+			password:req.body.password ///crypto.createHash('md5').update(req.body.password).digest('hex')
+		
         };
 
         userModel.insert(user,(status)=>{
+			console.log(user);
             if(status){
 				console.log('Insertion Succesful');
 				res.redirect('/admin/userlist');                              
@@ -122,11 +128,19 @@ router.post('/updateuser/:user_id', (req, res)=>{
 		user_type:req.body.user_type,
 		email:req.body.email
 	}
+	
+//PDFFFFF---------
+
+	
+	
+
+	//////----------
 	userModel.update(user, (result) => {
 		console.log(result);
 	});
 	res.redirect('/admin/userlist');
-	res.end(JSON.stringify(user));  
+	
+
 });
 
 ////Deletion
@@ -141,37 +155,41 @@ router.get('/delete/:user_id', (req, res)=>{
   });
 });
 
-router.get('/addnotice', (req, res) => {
+
+
+///////Post Notice
+router.get('/addnotice', (req,res) => {
 	if (req.session.email != null) {
 		userModel.getByEmail(req.session.email, function (result) {
-			res.render('admin/index', {
-				user: result
+			res.render('admin/addnotice', {
+				notice: result
 			});
 		})
 	} else {
 		res.redirect('/login');
 	}
+	
 }); 
 router.post('/addnotice', [
-    body('text')
+    body('notice')
     .notEmpty()
     .withMessage('Text is required for notice')
   ], (req, res) => {
-        notice={
-            text: req.body.text
+       var notice={
+            notice: req.body.notice
 			
         };
 
         userModel.insertnotice(notice,(status)=>{
             if(status){
 				console.log('Notice Posted Succesfully');
-				res.redirect('/admin/index');                              
+				res.redirect('/admin/noticelist');                              
             }else{
                 res.send("Notice Posting Failed!");                
             } 
         });
 	});
-	
+/////All Notices
 	router.get('/noticelist', (req, res) => {
 		if (req.session.email != null) {
 			userModel.getAllNotice(function (result) {
@@ -182,6 +200,33 @@ router.post('/addnotice', [
 		} else {
 			res.redirect('/login');
 		}
+	});
+
+	router.get('/deleteN/:nid', (req, res)=>{
+		userModel.deleteNotice(req.params.nid,(status)=>{
+			if(status){
+				res.redirect('/admin/noticelist');
+				
+			}else{
+				res.send('Deletion failed');
+			}
+	  });
+	});
+
+
+	//////////Search
+	router.post('/search',(req,res)=>{
+		var n = {
+			search : req.body.search,
+			searchby: req.body.searchby
+		};
+		userModel.searchNotice(n, function(results){
+			if(results){
+				res.json({n:results});
+			}else{
+				res.json({n:'error'});
+			}
+		});
 	});
 		
 module.exports = router;

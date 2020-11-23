@@ -1,7 +1,8 @@
-const db = require('./db');
+const db 		= require('./db');
+const crypto 	= require('crypto');
 
 module.exports= {
-	validate: function(user, callback){
+	validate: function(user, callback){	
 		var sql = "SELECT * FROM `user` WHERE email='"+user.email+"' AND password='"+user.password+"'";
 		db.getResults(sql, function(results){
 			if(results.length > 0){
@@ -11,27 +12,9 @@ module.exports= {
 			}
 		});
 	},
-	
-	getByEmail: function(email, callback){
-		var sql = "SELECT * FROM `user` WHERE email='"+email+"'";
-		db.getResults(sql, function(results){
-			callback(results);
-		});
-	},
-	getAllUser: function(callback){
-		var sql = "select * from user";
-		db.getResults(sql, function(results){
-			callback(results);
-		});
-	},
-	getById: function(user_id, callback){
-		var sql = "select * from user where user_id='"+user_id+"'";
-		db.getResults(sql, function(results){
-			callback(results);
-		});
-	},
 	insert:(user,callback)=>{
-        var sql="INSERT INTO `user`(`name`,`phone_number`,`address`,`blood_group`,`user_type`,`email`,`password`) VALUES ('"+user.name+"','"+user.phone_number+"','"+user.address+"','"+user.blood_group+"','"+user.user_type+"','"+user.email+"','"+user.password+"')";
+		
+		var sql="INSERT INTO `user`(`name`,`phone_number`,`address`,`blood_group`,`user_type`,`email`,`password`) VALUES ('"+user.name+"','"+user.phone_number+"','"+user.address+"','"+user.blood_group+"','"+user.user_type+"','"+user.email+"','"+user.password+"')";
         db.execute(sql,(status)=>{
 			if(status){
 				callback(true);
@@ -54,8 +37,28 @@ module.exports= {
 			callback(status);
 		});
 	},
+	
+	getByEmail: function(email, callback){
+		var sql = "SELECT * FROM `user` WHERE email='"+email+"'";
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
+	getAllUser: function(callback){
+		var sql = "select * from user";
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
+	getById: function(user_id, callback){
+		var sql = "select * from user where user_id='"+user_id+"'";
+		db.getResults(sql, function(results){
+			callback(results);
+		});
+	},
+
 	insertnotice:(notice,callback)=>{
-        var sql="INSERT INTO `notice`(`text`) VALUES ('"+notice.text+"')";
+		var sql = "INSERT INTO `notice` (`nid`, `notice`) VALUES (NULL, '"+notice.notice+"')";
         db.execute(sql,(status)=>{
 			if(status){
 				callback(true);
@@ -70,4 +73,23 @@ module.exports= {
 			callback(results);
 		});
 	},
+	
+
+	deleteNotice: function(id, callback){
+		var sql = "DELETE FROM `notice` WHERE nid='"+id+"';";
+		db.execute(sql, function(status){
+			callback(status);
+		});
+	},
+
+	searchNotice: function(n, callback){
+		var sql = "SELECT * FROM notice WHERE "+n.searchby+" LIKE '%"+n.search+"%'";
+		db.getResults(sql, function(results){
+			if(results.length > 0){
+				callback(results);
+			}else{
+				callback(false);
+			}
+		});
+	}
 }
