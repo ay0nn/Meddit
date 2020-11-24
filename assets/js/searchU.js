@@ -11,13 +11,13 @@ $(document).ready(function(){
 					'searchby':searchby},
 			success:function(response){
 				if(response.n !== 'error'){
-					var tableBody="<tr> <td>nid</td> <td>notice</td><td>Posted Date</td><td>Action</td></tr>";
+					var tableBody="<tr><td>user_id</td> <td>name</td> <td>user_type</td></tr>";
 					response.n.forEach(element => { 
-						var tableRow="";
-						tableRow+="<td>"+element.nid+"</td>";
-                        tableRow+="<td>"+element.notice+"</td>";
-                        tableRow+="<td>"+element.date+"</td>";
-						tableRow += "<td><a href='/admin/delete/"+element.nid+"'>Remove</a></td>";
+						var tableRow="2";
+						tableRow+="<td>"+element.user_id+"</td>";
+                        tableRow+="<td>"+element.name+"</td>";
+                        tableRow+="<td>"+element.user_type+"</td>";
+					//	tableRow += "<td><a href='/admin/delete/"+element.user_id+"'>Remove</a></td>";
 						tableBody=tableBody+"<tr>"+tableRow+"</tr>";
 					});
 					$('#table').html(tableBody);

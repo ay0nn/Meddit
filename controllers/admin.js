@@ -1,5 +1,4 @@
 const express 	= require('express');
-const crypto	= require('crypto');
 const router 	= express.Router();
 const {body, validationResult} 		= require('express-validator');
 const userModel		= require.main.require('./models/userModel');
@@ -155,6 +154,22 @@ router.get('/delete/:user_id', (req, res)=>{
   });
 });
 
+//////Search User
+router.post('/search',(req,res)=>{
+	var n = {
+		search : req.body.search,
+		searchby: req.body.searchby
+	};
+	userModel.searchUser(n, function(results){
+		if(results){
+			res.json({n:results});
+		}else{
+			res.json({n:'error'});
+		}
+	});
+});
+
+
 
 
 ///////Post Notice
@@ -228,5 +243,53 @@ router.post('/addnotice', [
 			}
 		});
 	});
+
+	/////Post
+
+	router.get('/postlist', (req, res) => {
+		if (req.session.email != null) {
+			userModel.getAllPost(function (result) {
+				res.render('admin/postlist', {
+					posts: result
+				});
+			})
+		} else {
+			res.redirect('/postlist');
+		}
+	});
+
+	router.get('/deleteP/:post_id', (req, res)=>{
+		userModel.deletePost(req.params.post_id,(status)=>{
+			if(status){
+				res.redirect('/admin/postlist');
+				
+			}else{
+				res.send('Deletion failed');
+			}
+	  });
+	});
 		
+	/////User Comments
+	router.get('/commentlist', (req, res) => {
+		if (req.session.email != null) {
+			userModel.getAllComment(function (result) {
+				res.render('admin/commentlist', {
+					comments: result
+				});
+			})
+		} else {
+			res.redirect('/commentlist');
+		}
+	});
+
+	router.get('/deleteC/:comment_id', (req, res)=>{
+		userModel.deleteComment(req.params.comment_id,(status)=>{
+			if(status){
+				res.redirect('/admin/commentlist');
+				
+			}else{
+				res.send('Deletion failed');
+			}
+	  });
+	});
 module.exports = router;

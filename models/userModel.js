@@ -31,13 +31,22 @@ module.exports= {
 		});
 	},
 
-	delete: function(id, callback){
-		var sql = "DELETE FROM `user` WHERE user_id='"+id+"';";
+	delete: function(user_id, callback){
+		var sql = "DELETE FROM `user` WHERE user_id='"+user_id+"';";
 		db.execute(sql, function(status){
 			callback(status);
 		});
 	},
-	
+	searchUser: function(n, callback){
+		var sql = "SELECT * FROM user WHERE "+n.searchby+" LIKE '%"+n.search+"%'";
+		db.getResults(sql, function(results){
+			if(results.length > 0){
+				callback(results);
+			}else{
+				callback(false);
+			}
+		});
+	},
 	getByEmail: function(email, callback){
 		var sql = "SELECT * FROM `user` WHERE email='"+email+"'";
 		db.getResults(sql, function(results){
@@ -56,6 +65,7 @@ module.exports= {
 			callback(results);
 		});
 	},
+	/////NOtice
 
 	insertnotice:(notice,callback)=>{
 		var sql = "INSERT INTO `notice` (`nid`, `notice`) VALUES (NULL, '"+notice.notice+"')";
@@ -91,5 +101,38 @@ module.exports= {
 				callback(false);
 			}
 		});
-	}
+	},
+	///// Posts
+	getAllPost: function(callback){
+		var p = "select * from post";
+		db.getResults(p, function(results){
+			callback(results);
+		});
+	},
+	
+
+	deletePost: function(id, callback){
+		var p = "DELETE FROM `post` WHERE post_id='"+id+"';";
+		db.execute(p, function(status){
+			callback(status);
+		});
+	},
+
+	/////Comments
+
+	getAllComment: function(callback){
+		var c = "select * from comment";
+		db.getResults(c, function(results){
+			callback(results);
+		});
+	},
+	
+
+	deleteComment: function(id, callback){
+		var c = "DELETE FROM `comment` WHERE comment_id='"+id+"';";
+		db.execute(c, function(status){
+			callback(status);
+		});
+	},
+
 }

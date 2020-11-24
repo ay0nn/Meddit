@@ -14,6 +14,9 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
+        <script type = "text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript" src = "/color/js/searchU.js"></script>
+       
         <link href="/color/css/mystyle.css" rel="stylesheet" />
         
     </head>
@@ -30,6 +33,12 @@
                <!-- Body Section-->
         <section class="page-section portfolio" id="portfolio">
             <div class="container">
+                <div class="form">
+                <select id="searchby">
+                    <option value="user_id">User id</option>
+                </select>
+                <input type="text" name="search" id="search" placeholder="Search User">
+            </div>
                 <!-- ---------------Body start---------------- -->
                <div id="table">
                 <table border="2"  width="100%" align="center">

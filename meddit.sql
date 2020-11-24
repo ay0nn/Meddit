@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2020 at 08:46 PM
+-- Generation Time: Nov 24, 2020 at 05:40 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.33
 
@@ -33,6 +33,13 @@ CREATE TABLE `comment` (
   `comment_by` int(25) NOT NULL,
   `post_of_comment` int(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `comment`
+--
+
+INSERT INTO `comment` (`comment_id`, `comment_content`, `comment_by`, `post_of_comment`) VALUES
+(1, 'I can give you blood,text me your location', 21, 2);
 
 -- --------------------------------------------------------
 
@@ -67,6 +74,13 @@ CREATE TABLE `post` (
   `post_content` varchar(350) NOT NULL,
   `post_by` int(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `post`
+--
+
+INSERT INTO `post` (`post_id`, `post_content`, `post_by`) VALUES
+(2, 'Need 3 bag AB+ve blood near Khilkhet', 21);
 
 -- --------------------------------------------------------
 
@@ -132,7 +146,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `comment_id` int(25) NOT NULL AUTO_INCREMENT;
+  MODIFY `comment_id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `notice`
@@ -144,7 +158,7 @@ ALTER TABLE `notice`
 -- AUTO_INCREMENT for table `post`
 --
 ALTER TABLE `post`
-  MODIFY `post_id` int(25) NOT NULL AUTO_INCREMENT;
+  MODIFY `post_id` int(25) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`
