@@ -1,6 +1,6 @@
 const express 	= require('express');
-const fs		= require('fs');
 const router 	= express.Router();
+const {body, validationResult} 		= require('express-validator');
 const userModel = require.main.require('./models/userModel');
 
 
@@ -8,11 +8,28 @@ const userModel = require.main.require('./models/userModel');
 router.get('/', (req, res)=>{
 	res.render('login');	
 });
-router.post('/', (req, res)=>{
+router.post('/',[
 	
-	var user = {
-		email: req.body.email,
-		password: req.body.password
+    body('email')
+    .notEmpty()
+    .withMessage('Email is required'),
+    
+    body('password')
+    .notEmpty()
+	.withMessage('Phone number is required'),
+	
+],(req, res)=>{
+	
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.send(errors.array());
+    }else{
+        user={
+			email: req.body.email,
+			password:req.body.password
+		
+        };
+
 
 	};
 	userModel.validate(user, function(status){

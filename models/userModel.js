@@ -1,6 +1,4 @@
 const db 		= require('./db');
-const crypto 	= require('crypto');
-
 module.exports= {
 	validate: function(user, callback){	
 		var sql = "SELECT * FROM `user` WHERE email='"+user.email+"' AND password='"+user.password+"'";

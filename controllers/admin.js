@@ -88,7 +88,7 @@ router.post('/adduser', [
         });
     }
   });
-  //////////Users list/////////////////
+////User list
   router.get('/userlist', (req, res) => {
 	if (req.session.email != null) {
 		userModel.getAllUser(function (result) {
@@ -168,8 +168,6 @@ router.post('/search',(req,res)=>{
 		}
 	});
 });
-
-
 
 
 ///////Post Notice

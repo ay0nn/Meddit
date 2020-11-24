@@ -7,7 +7,6 @@ const {body, validationResult} 		= require('express-validator');
 const login				= require('./controllers/login');
 const admin				= require('./controllers/admin');
 const logout			= require('./controllers/logout');
-const { DH_UNABLE_TO_CHECK_GENERATOR } = require('constants');
 const app				= express();
 const port				= 3001;
 //configuration
